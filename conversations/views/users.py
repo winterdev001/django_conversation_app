@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegistrationForm
+from conversations.forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User as UserModel
+
 User = get_user_model()
 
 def register(request):
@@ -34,7 +34,7 @@ def profile(request):
     return render(request, 'users/detail.html', params)
 
 @login_required
-def all_users(request):    
+def index(request):    
     users = User.objects.all()
     params = {
         'users': users,
@@ -42,7 +42,7 @@ def all_users(request):
     return render(request, 'users/index.html', params)
 
 @login_required
-def user_detail(request, user_id):
+def detail(request, user_id):
     user = User.objects.get(id=user_id)
     params = {
         'user': user,
